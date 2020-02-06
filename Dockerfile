@@ -3,12 +3,13 @@ FROM python:3.7.3
 WORKDIR /SpacecraftServer4Flask
 
 # Copy src files
-#COPY . .
-ADD . /app
+COPY . .
+#ADD . /SpacecraftServer4Flask
 
-# Install deps
-RUN   pip3 install pipenv && pipenv install
-#RUN pip3 install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+# Install depsrequirements.txt
+#RUN   pip3 install pipenv && pipenv install
+#RUN pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+RUN pip3 install -r requirements.txt
 # Expose port 5000
 EXPOSE 9000
 
