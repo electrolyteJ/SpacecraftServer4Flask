@@ -1,6 +1,6 @@
 FROM python:3.7.3
 
-WORKDIR /SpacecraftServer4Flask
+WORKDIR /spacecraftserver4flask
 
 # Copy src files
 COPY . .

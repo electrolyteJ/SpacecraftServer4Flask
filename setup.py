@@ -39,7 +39,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'app=app:main'
+            'app=app:create_app'
         ]
     }
 )
