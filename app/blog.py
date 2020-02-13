@@ -1,6 +1,6 @@
 import functools
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, sessions, url_for,
+    Blueprint, flash, g, redirect, render_template, request, session, url_for,
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.exceptions import abort
@@ -81,3 +81,22 @@ def delete(id):
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()
     return redirect(url_for('blog.index'))
+
+
+@bp.app_template_filter("print_hello_world")
+def print_hello_world(s):
+    return "print_hello_world: {}".format(s)
+
+
+# def printHelloWorld(s):
+#     return "printHelloWorld: {}".format(s)
+#
+#
+# bp.add_app_template_filter(printHelloWorld, name='printHelloWorld')
+
+@bp.app_context_processor
+def utility_processor():
+    def print():
+        return 'hahaha'
+
+    return dict(print_haha=print, user_id=session.get('user_id'))
