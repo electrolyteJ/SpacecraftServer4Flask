@@ -7,6 +7,8 @@ verify_ssl = true
 
 [packages]
 flask = "*"
+sentry-sdk = "*"
+blinker = "*"
 
 [requires]
 python_version = "3.7"

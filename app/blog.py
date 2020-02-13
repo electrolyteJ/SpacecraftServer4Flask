@@ -3,7 +3,7 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for,
 )
 from werkzeug.security import check_password_hash, generate_password_hash
-from werkzeug.exceptions import abort
+from werkzeug.exceptions import HTTPException, BadRequest,ClientDisconnected,Unauthorized,abort
 
 from app.db import get_db
 from app.auth import signin_required
@@ -100,3 +100,31 @@ def utility_processor():
         return 'hahaha'
 
     return dict(print_haha=print, user_id=session.get('user_id'))
+
+
+@bp.errorhandler(BadRequest)
+def handle_bad_request(e):
+    return 'bad request', 400
+
+
+# class InsufficientStorage(werkzeug.exceptions.HTTPException):
+#       code = 507
+#       description = 'Not enough storage space.'
+# app.register_error_handler(InsufficientStorage, handle_507)
+
+
+# def handle_bad_request(e):
+#     return 'bad request', 400
+# bp.register_error_handler(400,handle_bad_request)
+
+
+@bp.errorhandler(Exception)
+def handle_exception(e):
+    if isinstance(e, HTTPException):
+        return e
+    elif isinstance(e, BadRequest):
+        return 'bad request'
+    elif isinstance(e, ClientDisconnected):
+        return 'ClientDisconnected'
+    elif isinstance(e, Unauthorized):
+        return 'Unauthorized'

@@ -1,9 +1,22 @@
 import os
 from flask import Flask
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
+import logging
+from logging.handlers import SMTPHandler
 
 '''
 author:hawks jamesf
 '''
+
+mail_handler = SMTPHandler(
+    mailhost='127.0.0.1',
+    fromaddr='server-error@example.com',
+    toaddrs=['hawksjamesf@gmail.com'],
+    subject='Application Error'
+)
+mail_handler.setLevel(logging.ERROR)
+mail_handler.setFormatter(logging.Formatter('[%(asctime)s] %(levelname)s in %(module)s: %(message)s'))
 
 
 def create_app(test_config=None):
@@ -21,6 +34,11 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    sentry_sdk.init(
+        dsn="https://c659bb3641e14a86b54a0d3db91ff7ea@sentry.io/2495776",
+        integrations=[FlaskIntegration()]
+    )
+    if not app.debug: app.logger.addHandler(mail_handler)
     # @app.route('/')
     # def hello_world():
     #     return 'Hello World!'
