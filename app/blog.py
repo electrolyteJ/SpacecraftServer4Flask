@@ -7,6 +7,8 @@ from werkzeug.exceptions import HTTPException, BadRequest,ClientDisconnected,Una
 
 from app.db import get_db
 from app.auth import signin_required
+import logging
+from logging.handlers import SMTPHandler
 
 bp = Blueprint('blog', __name__)
 

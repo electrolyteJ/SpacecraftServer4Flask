@@ -1,6 +1,5 @@
 from app import create_app
-from config import ProductionConfig
-import logging
+from config.__init__ import TestingConfig
 
 '''
 - 127.0.0.1：回环地址。该地址指电脑本身，主要预留测试本机的TCP/IP协议是否正常。只要使用这个地址发送数据，则数据包不会出现在网络传输过程中。
@@ -22,5 +21,10 @@ IPV4中，0.0.0.0地址被用于表示一个无效的，未知的或者不可用
 '''
 if __name__ == '__main__':
     # app = create_app(config="settings.yaml")
-    app = create_app(config_file='prod_config.py', config_object=ProductionConfig)
-    app.run(host='0.0.0.0', port=9000)
+    app = create_app(config_object=TestingConfig)
+    use_debugger = app.debug and not (app.config.get('DEBUG_WITH_APTANA'))
+    # debug - whether to enable debug mode and catch exceptions
+    # use_debugger - whether to use the internal Flask debugger
+    # use_reloader - whether to reload and fork the process if modules were changed
+    app.run(host='0.0.0.0', port=9000,
+            use_debugger=use_debugger, debug=app.debug, use_reloader=use_debugger)

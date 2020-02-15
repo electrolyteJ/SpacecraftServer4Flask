@@ -59,7 +59,7 @@ local_settings.py
 db.sqlite3
 
 # Flask stuff:
-instance/
+#instance/
 .webassets-cache
 
 # Scrapy stuff:
@@ -172,3 +172,6 @@ pyvenv.cfg
 pip-selfcheck.json
 .idea/
 
+.DS_Store
+app/.DS_Store
+app/templates/.DS_Store
