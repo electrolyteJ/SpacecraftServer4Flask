@@ -3,10 +3,10 @@ from flask import Flask
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 import logging
-from logging.handlers import SMTPHandler
+
 from flask.logging import default_handler
 
-from config import DevelopmentConfig
+from config import DevelopmentConfig, mail_handler
 
 from werkzeug.utils import import_string
 
@@ -14,24 +14,13 @@ from werkzeug.utils import import_string
 author:hawks jamesf
 '''
 
-mail_handler = SMTPHandler(
-    mailhost='127.0.0.1',
-    fromaddr='server-error@example.com',
-    toaddrs=['hawksjamesf@gmail.com'],
-    subject='Application Error'
-)
-mail_handler.setLevel(logging.ERROR)
-mail_handler.setFormatter(logging.Formatter('[%(asctime)s] %(levelname)s in %(module)s: %(message)s'))
-
 
 def create_app(config_file=None, config_object=DevelopmentConfig):
     app = Flask(__name__, instance_relative_config=True)
 
     # 优先从文件区配置，有利于动态改变正在运行的app配置
-    if config_file is not None:
-        # app.config.from_envvar()
-        # app.config.from_json()
-        # app.config.update()
+    # if config_file is not  None:
+    if config_file:
         app.config.from_pyfile(config_file, silent=True)
     else:
         # 1.cfg =import_string('config.DevelopmentConfig')
@@ -42,6 +31,9 @@ def create_app(config_file=None, config_object=DevelopmentConfig):
     logging.info('flask env : {}'.format(app.config['SECRET_KEY']))
     app.config.from_mapping(SECRET_KEY='dev' if app.config['SECRET_KEY'] is None else app.config['SECRET_KEY'],
                             DATABASE=os.path.join(app.instance_path, 'app.sqlite'))
+    # app.config.from_envvar()
+    # app.config.from_json()
+    # app.config.update()
     try:
         os.makedirs(app.instance_path)
     except OSError:

@@ -1,8 +1,20 @@
-from logging.config import dictConfig
 from .logging import logger_dict
+from logging.config import dictConfig
+from logging.handlers import SMTPHandler
+import logging
 
 # load logging configuration
 dictConfig(logger_dict)
+
+# load mail configuration
+mail_handler = SMTPHandler(
+    mailhost='127.0.0.1',
+    fromaddr='server-error@example.com',
+    toaddrs=['hawksjamesf@gmail.com'],
+    subject='Application Error'
+)
+mail_handler.setLevel(logging.ERROR)
+mail_handler.setFormatter(logging.Formatter('[%(asctime)s] %(levelname)s in %(module)s: %(message)s'))
 
 
 class Config(object):

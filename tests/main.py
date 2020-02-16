@@ -22,7 +22,7 @@ IPV4中，0.0.0.0地址被用于表示一个无效的，未知的或者不可用
 if __name__ == '__main__':
     # app = create_app(config="settings.yaml")
     app = create_app(config_object=TestingConfig)
-    use_debugger = app.debug and not (app.config.get('DEBUG_WITH_APTANA'))
+    use_debugger = app.debug
     # debug - whether to enable debug mode and catch exceptions
     # use_debugger - whether to use the internal Flask debugger
     # use_reloader - whether to reload and fork the process if modules were changed

@@ -1,9 +1,11 @@
 import functools
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for,
+    template_rendered
 )
+from contextlib import contextmanager
 from werkzeug.security import check_password_hash, generate_password_hash
-from werkzeug.exceptions import HTTPException, BadRequest,ClientDisconnected,Unauthorized,abort
+from werkzeug.exceptions import HTTPException, BadRequest, ClientDisconnected, Unauthorized, abort
 
 from app.db import get_db
 from app.auth import signin_required
@@ -130,3 +132,19 @@ def handle_exception(e):
         return 'ClientDisconnected'
     elif isinstance(e, Unauthorized):
         return 'Unauthorized'
+
+from blinker import Namespace
+
+@contextmanager
+def captured_templates(app):
+    recorded = []
+
+    def recored(sender, template, context, **extra):
+        recorded.append((template, context))
+
+    template_rendered.connect(recored, app)
+    try:
+        yield recorded
+    finally:
+        template_rendered.disconnect(recored, app)
+
