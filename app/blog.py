@@ -1,7 +1,8 @@
 import functools
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for,
-    template_rendered
+    Blueprint, flash, redirect, request, session, url_for,
+    template_rendered, render_template,
+    g, current_app, appcontext_tearing_down, appcontext_popped, appcontext_pushed
 )
 from contextlib import contextmanager
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -87,6 +88,8 @@ def delete(id):
     return redirect(url_for('blog.index'))
 
 
+# =================================================================
+
 @bp.app_template_filter("print_hello_world")
 def print_hello_world(s):
     return "print_hello_world: {}".format(s)
@@ -133,7 +136,9 @@ def handle_exception(e):
     elif isinstance(e, Unauthorized):
         return 'Unauthorized'
 
+
 from blinker import Namespace
+
 
 @contextmanager
 def captured_templates(app):
@@ -148,3 +153,49 @@ def captured_templates(app):
     finally:
         template_rendered.disconnect(recored, app)
 
+
+@template_rendered.connect_via(current_app)
+def when_template_rendered(sender, template, context, **extra):
+    print('when tempalte rendered')
+
+
+from flask.views import View, MethodView, MethodViewType
+
+
+class Users(View):
+    def dispatch_request(self):
+        return render_template('xxx.html')
+
+
+bp.add_url_rule('/users/', view_func=Users.as_view('get_users'))
+
+
+class UserApi(MethodView):
+    decorators = [signin_required]
+
+    def get(self):
+        print('user api get')
+
+    def post(self):
+        print('user api post')
+
+
+bp.add_url_rule('/userapi/', view_func=UserApi.as_view('userapi'))
+view = signin_required(UserApi.as_view('userapi'))
+bp.add_url_rule('/userapi/', view_func=view)
+
+#signals start
+@appcontext_pushed
+def pushed():
+    pass
+
+
+@appcontext_popped
+def popped():
+    pass
+
+
+@appcontext_tearing_down
+def tearing_down():
+    pass
+#signals end
