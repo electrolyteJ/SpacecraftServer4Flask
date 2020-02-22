@@ -27,6 +27,7 @@ def init_db():
 
 
 @click.command('init-db')
+# @click.argument()
 @with_appcontext
 def init_db_command():
     init_db()

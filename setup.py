@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from setuptools import find_packages, setup
+
 # python setup.py install
 setup(
     name='spacecraftserver4flask',
@@ -40,6 +41,9 @@ setup(
     entry_points={
         'console_scripts': [
             'app=app:create_app'
-        ]
+        ],
+        'flask.commands': [
+            'my-command=extension.commands:cli'
+        ],
     }
 )
