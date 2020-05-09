@@ -14,7 +14,8 @@ mail_handler = SMTPHandler(
     subject='Application Error'
 )
 mail_handler.setLevel(logging.ERROR)
-mail_handler.setFormatter(logging.Formatter('[%(asctime)s] %(levelname)s in %(module)s: %(message)s'))
+mail_handler.setFormatter(logging.Formatter(
+    '[%(asctime)s] %(levelname)s in %(module)s: %(message)s'))
 
 
 class Config(object):

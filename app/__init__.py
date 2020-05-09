@@ -20,13 +20,14 @@ def create_app(config_file=None, config_object=DevelopmentConfig):
 
     # 优先从文件区配置，有利于动态改变正在运行的app配置
     # if config_file is not  None:
-    if config_file:
-        app.config.from_pyfile(config_file, silent=True)
-    else:
-        # 1.cfg =import_string('config.DevelopmentConfig')
+    if config_object:
+           # 1.cfg =import_string('config.DevelopmentConfig')
         # app.config.from_object(cfg)
         # 2 app.config.from_object('config.DevelopmentConfig')
         app.config.from_object(config_object)
+
+    else:
+        app.config.from_pyfile(config_file, silent=True)
 
     logging.info('flask env : {}'.format(app.config['SECRET_KEY']))
     app.config.from_mapping(SECRET_KEY='dev' if app.config['SECRET_KEY'] is None else app.config['SECRET_KEY'],
@@ -44,7 +45,8 @@ def create_app(config_file=None, config_object=DevelopmentConfig):
         integrations=[FlaskIntegration()]
     )
 
-    if not app.debug: app.logger.addHandler(mail_handler)
+    if not app.debug:
+        app.logger.addHandler(mail_handler)
     # @app.route('/')
     # def hello_world():
     #     return 'Hello World!'
@@ -54,6 +56,9 @@ def create_app(config_file=None, config_object=DevelopmentConfig):
 
     from . import auth
     app.register_blueprint(auth.bp)
+
+    from . import location
+    app.register_blueprint(location.bp)
 
     from . import blog
     app.register_blueprint(blog.bp)

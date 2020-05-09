@@ -1,5 +1,6 @@
+# coding=utf-8
 from app import create_app
-from config import ProductionConfig
+from config import ProductionConfig, DevelopmentConfig
 import logging
 
 '''
@@ -22,5 +23,6 @@ IPV4中，0.0.0.0地址被用于表示一个无效的，未知的或者不可用
 '''
 if __name__ == '__main__':
     # app = create_app(config="settings.yaml")
-    app = create_app(config_file='prod_config.py', config_object=ProductionConfig)
+    app = create_app(config_file='prod_config.py',
+                     config_object=DevelopmentConfig)
     app.run(host='0.0.0.0', port=9000)
