@@ -47,6 +47,7 @@ def data():
                 print("location response \n>>>>:{}".format(location['body']))
                 resp_body.append(json.loads(location['body']))
             # return json.dumps(locations, sort_keys=True, indent=4)
+            # return json.dumps(resp_body)
             return json.jsonify(resp_body)
 
         else:  # get alll

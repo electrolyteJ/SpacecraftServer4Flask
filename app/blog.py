@@ -2,7 +2,7 @@ import functools
 from flask import (
     Blueprint, flash, redirect, request, session, url_for,
     template_rendered, render_template,
-    g, current_app, appcontext_tearing_down, appcontext_popped, appcontext_pushed,request_tearing_down
+    g, current_app, appcontext_tearing_down, appcontext_popped, appcontext_pushed, request_tearing_down
 )
 from contextlib import contextmanager
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -15,7 +15,8 @@ from logging.handlers import SMTPHandler
 import click
 from flask.cli import with_appcontext
 
-bp = Blueprint('blog', __name__,cli_group=None)
+bp = Blueprint('blog', __name__, cli_group=None)
+
 
 @bp.route('/')
 def index():
@@ -41,7 +42,8 @@ def create():
             flash(error)
         else:
             db = get_db()
-            db.execute('INSERT INTO post (title,body,author_id) VALUES (?, ?, ?)', (title, body, g.user['id']))
+            db.execute('INSERT INTO post (title,body,author_id) VALUES (?, ?, ?)',
+                       (title, body, g.user['id']))
             db.commit()
             return redirect(url_for('blog.index'))
 
@@ -62,7 +64,8 @@ def update(id):
             flash(error)
         else:
             db = get_db()
-            db.execute('UPDATE post SET title =? , body =? WHERE id = ?', (title, body, id))
+            db.execute(
+                'UPDATE post SET title =? , body =? WHERE id = ?', (title, body, id))
             db.commit()
             return redirect(url_for('blog.index'))
     return render_template('blog/update.html', post=post)
@@ -185,7 +188,7 @@ bp.add_url_rule('/userapi/', view_func=UserApi.as_view('userapi'))
 view = signin_required(UserApi.as_view('userapiv2'))
 bp.add_url_rule('/userapiv2/', view_func=view)
 
-#signals start
+# signals start
 # @appcontext_pushed
 # def pushed():
 #     pass
@@ -199,12 +202,11 @@ bp.add_url_rule('/userapiv2/', view_func=view)
 # @appcontext_tearing_down
 # def tearing_down():
 #     pass
-#signals end
+# signals end
 
 
 @bp.cli.command('create')
 @click.argument('name')
 @with_appcontext
 def createv2(name):
-    print("{} application context:{}".format(name,current_app))
-
+    print("{} application context:{}".format(name, current_app))

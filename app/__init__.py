@@ -60,6 +60,9 @@ def create_app(config_file=None, config_object=DevelopmentConfig):
     from . import location
     app.register_blueprint(location.bp)
 
+    from . import op_users
+    app.register_blueprint(op_users.bp)
+
     from . import blog
     app.register_blueprint(blog.bp)
     app.add_url_rule('/', endpoint='index')
