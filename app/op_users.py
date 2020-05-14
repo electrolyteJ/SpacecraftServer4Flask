@@ -25,7 +25,7 @@ def data():
     py_script = os.path.join(
         os.getcwd(), 'command.py'
     )
-    cmd = 'python %s' % (py_script)
+    cmd = 'python3 %s' % (py_script)
     if request.method == 'DELETE':
         if not request.data:
             return "upload failure: body has emtpy", 400
