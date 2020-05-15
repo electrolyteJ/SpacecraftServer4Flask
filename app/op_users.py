@@ -30,7 +30,6 @@ def read_output():
 
 @bp.route('data',  methods=['DELETE', 'GET'])
 def data():
-    clear_output()
     py_script = os.path.join(
         os.getcwd(), 'command.py'
     )
