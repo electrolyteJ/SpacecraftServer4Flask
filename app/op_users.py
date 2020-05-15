@@ -20,8 +20,17 @@ def upload():
     return "upload successful", 200
 
 
+output_filename = os.path.join(os.getcwd(), 'response_log.txt')
+
+
+def read_output():
+    with open(output_filename, 'r') as f:
+        return f.read()
+
+
 @bp.route('data',  methods=['DELETE', 'GET'])
 def data():
+    clear_output()
     py_script = os.path.join(
         os.getcwd(), 'command.py'
     )
@@ -55,5 +64,6 @@ def data():
     res = subprocess.check_output(cmd_list, shell=True)
     print('>>>> '+cmd_list)
     print(res.decode('utf-8'))
-    return res, 200
+    res_log = read_output()
+    return res_log, 200
 #  "backup": 4
