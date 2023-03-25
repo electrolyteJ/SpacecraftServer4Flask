@@ -93,7 +93,7 @@ proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
 点击下方按钮即可创建一个对应的 Railway 项目，其会自动 Fork 本项目到你的 Github 账号下。
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/10D-TF?referralCode=oMcVS2)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/51V9Gf?referralCode=ecalR4)
 
 填写完环境变量后，点击 Deploy 就完成了项目的部署
 
