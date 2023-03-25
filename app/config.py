@@ -1,3 +1,9 @@
+"""
+ 优先从instance目录读取配置文件，如果没有再从内存读取
+"""
+import os
+
+
 class Config(object):
     """Base config, uses staging database server."""
     DEBUG = False
@@ -7,15 +13,22 @@ class Config(object):
     # MAX_COOKIE_SIZE = 10485760
     # MAX_CONTENT_LENGTH=None
     DB_SERVER = '192.168.1.56'
+
     @property
     def DATABASE_URI(self):  # Note: all caps
         return 'mysql://user@{}/foo'.format(self.DB_SERVER)
+
+    SECRET_KEY = os.environ.get('B_SECRET', 'secret-key')
+    WTF_CSRF_ENABLED = False
+    AVATAR_PATH = '/avatar/'
+    COOKIE_ENABLE = False
 
 
 class ProductionConfig(Config):
     """Uses production database server."""
     ENV = 'prod'
     DB_SERVER = '192.168.19.32'
+    SERVER_NAME = '0.0.0.0:9000'
     SECRET_KEY = b'\xfd\xdec\xf4+\r\xef\x81#Qe\xc2\xad5\x89\xa2'
 
 
@@ -30,3 +43,6 @@ class TestingConfig(Config):
     TESTING = True
     DB_SERVER = 'localhost'
     DATABASE_URI = 'sqlite:///:memory:'
+
+    # 登录cookie 防止退出浏览器重新登录
+    COOKIE_ENABLE = True

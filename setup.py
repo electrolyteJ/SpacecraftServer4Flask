@@ -40,7 +40,8 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'app=app:create_app'
+            'app=app:create_app',
+            "fk = app:main",
         ],
         'flask.commands': [
             'my-command=extension.commands:cli'

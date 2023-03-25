@@ -1,5 +1,5 @@
-# coding=utf-8
 from app import create_app
+
 '''
 - 127.0.0.1：回环地址。该地址指电脑本身，主要预留测试本机的TCP/IP协议是否正常。只要使用这个地址发送数据，则数据包不会出现在网络传输过程中。
 - 10.x.x.x、172.16.x.x～172.31.x.x、192.168.x.x：这些地址被用做内网中。用做私网地址，这些地址不与外网相连。
@@ -17,8 +17,10 @@ IPV4中，0.0.0.0地址被用于表示一个无效的，未知的或者不可用
 - 用做服务端，表示本机的任意IPV4地址。
 
 比如我有一台服务器，一个外网A,一个内网B，如果我绑定的端口指定了0.0.0.0，那么通过内网地址或外网地址都可以访问我的应用。
+启动生产环境服务器：python3 -m app
 '''
 if __name__ == '__main__':
     # app = create_app(config="settings.yaml")
-    app = create_app(config_file='prod_config.py',)
+    print("正式服务启动" + "." * 100)
+    app = create_app(config_file='prod_config.py', )
     app.run(host='0.0.0.0', port=9000)

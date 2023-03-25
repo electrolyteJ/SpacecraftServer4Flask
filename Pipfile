@@ -1,9 +1,4 @@
 [[source]]
-url = "https://pypi.org/simple"
-verify_ssl = true
-name = "pypi"
-
-[[source]]
 url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 verify_ssl = true
 name = "tsinghua"
@@ -19,7 +14,14 @@ sqlalchemy = "*"
 flask-wtf = "*"
 wtforms = "*"
 gunicorn = "*"
-db = "*"
+redis = "*"
+email-validator = "*"
+flask-mail = "*"
+pillow = "*"
+python-dotenv = "*"
+influxdb-client = "*"
+apscheduler = "*"
+
 
 [dev-packages]
 python-dotenv = "*"

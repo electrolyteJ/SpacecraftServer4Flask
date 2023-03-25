@@ -1,17 +1,53 @@
 import os
 
-from flask import Flask
-from app.util import l
+from flask import Flask, current_app
+from flask_login import LoginManager
+
+from sentry_sdk.integrations.flask import FlaskIntegration
 from app import api, storage
+from flask_wtf.csrf import CSRFProtect
+from app.config import ProductionConfig
 from app.config import DevelopmentConfig
+from app.storage.user import AnonymousUser, User
+from app.util import l
+from app.storage import user as user_dao
+
+csrf_protect = CSRFProtect()
 
 
-def create_app(config_file=None, config_object=DevelopmentConfig):
+def flask_login_init(app):
+    csrf_protect.init_app(app)
+    login_manager = LoginManager()
+    login_manager.session_protection = "strong"
+    login_manager.anonymous_user = AnonymousUser
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        current_app.logger.info(user_id)
+        # return user_dao.get(user_id=user_id)
+        return User.query.get(user_id)
+
+    @login_manager.unauthorized_handler
+    def unauthorized():
+        return "未授权"
+
+
+def create_app(config_file=None, config_object=ProductionConfig()):
+    """
+    create_app 工厂函数使用flask cli才会默认执行，其他需要主动调用
+    启动：flask --app app run
+    :param config_file:
+    :param config_object:
+    :return:
+    """
+
     app = Flask(__name__, instance_relative_config=True)
     # 优先从文件区配置，有利于动态改变正在运行的app配置
+    app.config['UPLOAD_FOLDER'] = app.instance_path
     if config_file:
         l.i("读取config_file")
-        app.config.from_pyfile(config_file)
+        app.config.from_pyfile(config_file, silent=True)
     else:
         # 1.cfg =import_string('config.DevelopmentConfig')
         # app.config.from_object(cfg)
@@ -26,11 +62,10 @@ def create_app(config_file=None, config_object=DevelopmentConfig):
     except OSError:
         pass
 
-    # sentry_sdk.init(
-    #     dsn="https://c659bb3641e14a86b54a0d3db91ff7ea@sentry.io/2495776",
-    #     integrations=[FlaskIntegration()]
-    # )
-    api.init(app)
-    l.init(app)
+    # 注册路由
+    api.init(csrf_protect, app)
+    # 初始化数据库
     storage.init(app)
+    l.init(app)
+    flask_login_init(app)
     return app
