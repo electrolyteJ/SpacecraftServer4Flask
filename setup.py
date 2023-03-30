@@ -40,8 +40,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'app=app:create_app',
-            "fk = app:main",
+            'spacecraftserver4flask=main:app',
         ],
         'flask.commands': [
             'my-command=extension.commands:cli'
