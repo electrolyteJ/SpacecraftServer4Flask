@@ -19,8 +19,8 @@ IPV4中，0.0.0.0地址被用于表示一个无效的，未知的或者不可用
 比如我有一台服务器，一个外网A,一个内网B，如果我绑定的端口指定了0.0.0.0，那么通过内网地址或外网地址都可以访问我的应用。
 启动生产环境服务器：python3 -m app
 '''
+app = create_app(config_file = 'prod_config.py')
 if __name__ == '__main__':
     # app = create_app(config="settings.yaml")
     print("正式服务启动" + "." * 100)
-    app = create_app(config_file='prod_config.py', )
-    app.run(host='0.0.0.0', port=9000)
+    app.run(port=os.getenv("PORT", default=5000))

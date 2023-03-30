@@ -28,7 +28,6 @@ class ProductionConfig(Config):
     """Uses production database server."""
     ENV = 'prod'
     DB_SERVER = '192.168.19.32'
-    SERVER_NAME = '0.0.0.0:9000'
     SECRET_KEY = b'\xfd\xdec\xf4+\r\xef\x81#Qe\xc2\xad5\x89\xa2'
 
 

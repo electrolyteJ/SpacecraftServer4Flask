@@ -5,7 +5,7 @@ import os
 import sqlite3
 from flask import current_app, g, Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Integer, DateTime, or_, Column
+from sqlalchemy import String, Integer, DateTime, or_, Column,ARRAY,Boolean
 
 
 def get_db():
@@ -26,13 +26,15 @@ def close_db(e=None):
 
 
 alchemy = SQLAlchemy()
-DbModel = alchemy.Model
+DbModel  = alchemy.Model
 dbSession = alchemy.session
 DbColumn = Column
 DbInteger = Integer
 DbString = String
 DbDateTime = DateTime
 db_or = or_
+DbArray = ARRAY
+DbBoolean = Boolean
 
 
 def init(app: Flask):

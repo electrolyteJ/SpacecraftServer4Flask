@@ -1,6 +1,6 @@
 [[source]]
 url = "https://pypi.tuna.tsinghua.edu.cn/simple"
-verify_ssl = true
+verify_ssl = false
 name = "tsinghua"
 
 [packages]
@@ -13,18 +13,16 @@ flask-sqlalchemy = "*"
 sqlalchemy = "*"
 flask-wtf = "*"
 wtforms = "*"
-gunicorn = "*"
 redis = "*"
 email-validator = "*"
 flask-mail = "*"
 pillow = "*"
-python-dotenv = "*"
 influxdb-client = "*"
 apscheduler = "*"
-
+openai = "*"
+requests = "*"
+pysocks = "*"
 
 [dev-packages]
 python-dotenv = "*"
-
-[requires]
-python_version = "3.8"
+gunicorn = "*"

@@ -24,7 +24,7 @@ services:
   spacecraftserver4flask:
     container_name: spacecraftserver4flask
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: ../Dockerfile
     ports:
       - "9000:9000/tcp"
