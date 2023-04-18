@@ -3,8 +3,9 @@
 包管理 |虚拟环境管理
 |---|---
 pip|venv/virtualenv/Virtualenvwrapper
-pipenv|pipenv
+pipenv|pipenv shell
 conda|conda
+poetry|poetry shell
 
 pipenv常用指令
 ```bash
@@ -24,12 +25,15 @@ pipenv update <包名>  # 更新指定的包的依赖项
 exit  # 退出当前虚拟环境
 ```
 
-## 依赖获取
-
-- pipenv install
-- docker-compose up -d(influxdb：root/12345678、grafana)
-
-
+poetry常用指令
+```bash
+poetry shell 进入虚拟环境
+poetry add 添加依赖包
+poetry install 安装所有依赖
+poetry run xxx 运行
+poetry build 打包
+poetry publish 发布python包
+```
 
 # `项目部署`
 
