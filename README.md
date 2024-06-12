@@ -1,11 +1,11 @@
 # `Dev`
-## 包管理
-包管理 |虚拟环境管理
-|---|---
-pip|venv/virtualenv/Virtualenvwrapper
-pipenv|pipenv shell
-conda|conda
-poetry|poetry shell
+## 构建/包管理
+
+...| 构建系统|包管理/虚拟环境管理
+|---|---|---
+python |poetry/hatch/pdm | pip(venv/virtualenv/Virtualenvwrapper)/pipenv(pipenv shell)/conda
+javascript | webpack/vite/rollup|npm
+
 
 pipenv常用指令
 ```bash
