@@ -1,10 +1,11 @@
 # `Dev`
 ## 构建/包管理
 
-...| 构建系统|包管理/虚拟环境管理
+...|python |javascript
 |---|---|---
-python |poetry/hatch/pdm | pip(venv/virtualenv/Virtualenvwrapper)/pipenv(pipenv shell)/conda
-javascript | webpack/vite/rollup|npm
+构建系统|poetry/hatch/pdm|webpack/vite/rollup
+包管理/虚拟环境管理|pip(venv/virtualenv/Virtualenvwrapper)/pipenv(pipenv shell)/conda|npm/pnpm/yarn
+配置文件|pyproject.toml|package.json
 
 
 pipenv常用指令
