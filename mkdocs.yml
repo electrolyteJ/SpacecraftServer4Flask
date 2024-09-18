@@ -1,0 +1,50 @@
+site_name: spacecraft-server4flask
+theme:
+  name: material
+  locale: en
+  highlightjs: true
+  hljs_languages:
+    - yaml
+    - django
+  features:
+    - navigation.tabs
+    - navigation.sections
+    # - navigation.expand
+    - navigation.path
+    - navigation.indexes
+
+nav:
+  - 'Home':
+    - 'Index': index.md
+
+  - 'AD':
+    - 'Index': ad/index.md
+    - '880':
+      - ad/880/index.md
+      - 'a' : ad/880/a.md
+      - 'b' : ad/880/b.md
+
+markdown_extensions:
+  - smarty
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+  - attr_list
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  # - pymdownx.emoji:
+  #     emoji_index: !!python/name:materialx.emoji.twemoji
+  #     emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tilde
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+
+plugins:
+  - search
